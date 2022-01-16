@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Week1 Homework- Concerns Separation</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://kit.fontawesome.com/089c571203.js" crossorigin="anonymous"></script>
+
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,200;0,300;1,200&family=Mukta:wght@300;400;500;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        padding: 1% 5% 0 5%;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-family: 'Mukta', sans-serif;
+        letter-spacing:2px;
+        color:#30336b;
+    }
+    h1 {
+        font-size:34px;
+    }
+    table {
+        width: 90%;
+        text-align: center;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+    table thead th {
+        padding: 10px;
+        width: 100px;
+        font-size: 24px;
+
+    }
+    table tbody td {
+        font-size:20px;
+        margin-bottom:5px;
+        transition:0.3s;
+    }
+
+    .enable {
+        color:#e67e22;
+    }
+    .disable {
+        color:#95a5a6;
+    }
+    .tableButton {
+        outline: none;
+        background: transparent;
+        border-radius: 20px;
+        padding: 2px;
+        cursor: pointer;
+        width: 100px;
+        border: 2px solid black;
+        color: #e74c3c;
+        font-size: 18px;
+        transition:all 0.5s;
+        opacity: 0.6;
+    }
+    .tableButton:hover {
+        width:110px;
+        opacity:1;
+    }
+    #count {
+        text-align: right;
+        font-size: 16px;
+        color: #95a5a6;
+    }
+
+    img {
+        border-radius:15px;
+        box-shadow: 1px 2px 4px #000 ,-1px -2px 4px #95a5a6;
+    }
+    .largepic{
+        width: 350px;
+        height: 350px;
+    }
+
+    #itemContent {
+        display: flex;
+
+    }
+
+    .originPrice {
+        text-decoration: line-through;
+    }
+
+    .col-1,
+    .col-2 {
+        flex: 1;
+        padding:2%;
+    }
+    .col-1 {
+        display: flex;
+        align-items: center;
+        gap:20px;
+    }
+    .col-1 li{
+        list-style-type:none;
+        margin-bottom: 8px;
+    }
+    .smallpic {
+        width:160px;
+        height:160px;
+    }
+    .col-2 {
+        display: flex;
+        gap:30px;
+        flex-direction:column;
+    }
+    .col-2 h2 {
+        letter-spacing:3px;
+        font-size: 30px;
+    }
+    .col-2 h2 span {
+        font-size:20px;
+        display: inline-block;
+        background-color:#e9e9e9;
+        margin-left: 20px;
+        width:80px;
+        text-align:center;
+        padding:5px;
+        border-radius: 15px;
+    }
+    .col-2 p {
+        font-size:22px;
+    }
+</style>
+
+<body>
+    <div id=app>
+        <h1>產品列表</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>產品名稱</th>
+                    <th>原價</th>
+                    <th>售價</th>
+                    <th>是否啟用</th>
+                    <th>查看細節</th>
+                </tr>
+            </thead>
+            <hr>
+            <tbody>
+                <tr v-for=" item in products" :key="item.id">
+                    <td>{{item.title}}</td>
+                    <td>{{item.origin_price}}</td>
+                    <td>{{item.price}}</td>
+                    <td> 
+                        <span v-if ="item.is_enabled" class="enable">啟用</span>
+                        <span v-else class="disable">未啟用</span>
+                    </td>
+                    <td>
+                        <button class='tableButton' type="button" @click="showCase(item)">點我</button>
+                    </td>
+
+                </tr>
+            </tbody>
+
+        </table>
+        <p id="count">目前共有{{products.length}}項產品</p>
+
+        <div id='showDetail'>
+            <h1>單一產品細節</h1>
+            <div id="itemContent" v-if="temp.title">
+                <div class="col-1">
+                    <img class='largepic' :src="temp.imageUrl">
+                    <ul>
+                        <li v-for="(item , i) in temp.imagesUrl" :key="i">
+                            <img class="smallpic" :src = "item">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-2">
+                    <h2>{{temp.title}} <span>{{temp.category}}</span></h2>
+                    <p>商品描述 : {{temp.description}}</p>
+                    <p>商品內容 : {{temp.content}}</p>
+                    <p>產品售價 : 超激價! {{temp.price}} <span class='originPrice'>{{temp.origin_price}}</span> 個 / 元</p>
+                    <p>尚有數量 : {{temp.num}} {{temp.unit}}</p>
+                </div>
+
+            </div>
+            <div v-else>請選擇一個商品查看</div>
+        </div>
+    </div>
+
+</body>
+<script>
+    // products: [{
+    //         category: "甜甜圈",
+    //         content: "尺寸：14x14cm",
+    //         description: "濃郁的草莓風味，中心填入滑順不膩口的卡士達內餡，帶來滿滿幸福感！",
+    //         id: "-L9tH8jxVb2Ka_DYPwng",
+    //         is_enabled: 1,
+    //         origin_price: 150,
+    //         price: 99,
+    //         title: "草莓莓果夾心圈",
+    //         unit: "個",
+    //         num: 10,
+    //         imageUrl: "https://images.unsplash.com/photo-1583182332473-b31ba08929c8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzR8fGRvbnV0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60",
+    //         imagesUrl: [
+    //             "https://images.unsplash.com/photo-1626094309830-abbb0c99da4a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2832&q=80",
+    //             "https://images.unsplash.com/photo-1559656914-a30970c1affd?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTY0fHxkb251dHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
+    //         ]
+    //     },
+    //     {
+    //         category: "蛋糕",
+    //         content: "尺寸：6寸",
+    //         description: "蜜蜂蜜蛋糕，夾層夾上酸酸甜甜的檸檬餡，清爽可口的滋味讓人口水直流！",
+    //         id: "-McJ-VvcwfN1_Ye_NtVA",
+    //         is_enabled: 16,
+    //         origin_price: 1000,
+    //         price: 900,
+    //         title: "蜂蜜檸檬蛋糕",
+    //         unit: "個",
+    //         num: 1,
+    //         imageUrl: "https://images.unsplash.com/photo-1627834377411-8da5f4f09de8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80",
+    //         imagesUrl: [
+    //             "https://images.unsplash.com/photo-1618888007540-2bdead974bbb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=987&q=80",
+    //         ]
+    //     },
+    //     {
+    //         category: "蛋糕",
+    //         content: "尺寸：6寸",
+    //         description: "法式煎薄餅加上濃郁可可醬，呈現經典的美味及口感。",
+    //         id: "-McJ-VyqaFlLzUMmpPpm",
+    //         is_enabled: 1,
+    //         origin_price: 700,
+    //         price: 600,
+    //         title: "暗黑千層",
+    //         unit: "個",
+    //         num: 15,
+    //         imageUrl: "https://images.unsplash.com/photo-1505253149613-112d21d9f6a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDZ8fGNha2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60",
+    //         imagesUrl: [
+    //             "https://images.unsplash.com/flagged/photo-1557234985-425e10c9d7f1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTA5fHxjYWtlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60",
+    //             "https://images.unsplash.com/photo-1540337706094-da10342c93d8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDR8fGNha2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
+    //         ]
+    //     }
+    // ];
+
+    const app = Vue.createApp({
+
+        data() {
+            return {
+                temp: {},
+                products: [{
+                        category: "甜甜圈",
+                        content: "尺寸：14x14cm",
+                        description: "濃郁的草莓風味，中心填入滑順不膩口的卡士達內餡，帶來滿滿幸福感！",
+                        id: "-L9tH8jxVb2Ka_DYPwng",
+                        is_enabled: 1,
+                        origin_price: 150,
+                        price: 99,
+                        title: "草莓莓果夾心圈",
+                        unit: "個",
+                        num: 10,
+                        imageUrl: "https://images.unsplash.com/photo-1583182332473-b31ba08929c8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzR8fGRvbnV0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60",
+                        imagesUrl: [
+                            "https://images.unsplash.com/photo-1626094309830-abbb0c99da4a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2832&q=80",
+                            "https://images.unsplash.com/photo-1559656914-a30970c1affd?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTY0fHxkb251dHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
+                        ]
+                    },
+                    {
+                        category: "蛋糕",
+                        content: "尺寸：6寸",
+                        description: "蜜蜂蜜蛋糕，夾層夾上酸酸甜甜的檸檬餡，清爽可口的滋味讓人口水直流！",
+                        id: "-McJ-VvcwfN1_Ye_NtVA",
+                        is_enabled: 16,
+                        origin_price: 1000,
+                        price: 900,
+                        title: "蜂蜜檸檬蛋糕",
+                        unit: "個",
+                        num: 1,
+                        imageUrl: "https://images.unsplash.com/photo-1627834377411-8da5f4f09de8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80",
+                        imagesUrl: [
+                            "https://images.unsplash.com/photo-1618888007540-2bdead974bbb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=987&q=80",
+                        ]
+                    },
+                    {
+                        category: "蛋糕",
+                        content: "尺寸：6寸",
+                        description: "法式煎薄餅加上濃郁可可醬，呈現經典的美味及口感。",
+                        id: "-McJ-VyqaFlLzUMmpPpm",
+                        is_enabled: 1,
+                        origin_price: 700,
+                        price: 600,
+                        title: "暗黑千層",
+                        unit: "個",
+                        num: 15,
+                        imageUrl: "https://images.unsplash.com/photo-1505253149613-112d21d9f6a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDZ8fGNha2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60",
+                        imagesUrl: [
+                            "https://images.unsplash.com/flagged/photo-1557234985-425e10c9d7f1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTA5fHxjYWtlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60",
+                            "https://images.unsplash.com/photo-1540337706094-da10342c93d8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDR8fGNha2V8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
+                        ]
+                    }
+                ]
+            }
+        },
+        methods: {
+            showCase: function (x) {
+                this.temp = {
+                    ...x
+                }
+
+            }
+        }
+    });
+    app.mount('#app')
+</script>
+
+</html>
