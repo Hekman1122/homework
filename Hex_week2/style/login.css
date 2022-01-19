@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,200;0,300;1,200&family=Mukta:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-family: 'Mukta', sans-serif;
+    color: #30336b;
+}
+
+.insideBox {
+    width: 500px;
+    height:500px;
+    box-shadow: 1px 2px 4px #000, -1px -2px 4px #95a5a6;
+    border-radius: 30px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50% , -50%)
+}
+
+.insideBox h1 {
+    font-size: 50px;
+    margin: 20px 0;
+    text-shadow: 1px 2px 3px rgb(146, 146, 146);
+    text-align: center;
+}
+
+.input {
+    margin: 30px 0;
+    padding: 0 0 0 45px;
+}
+
+.inputBox {
+    width: 85%;
+    padding: 8px;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    border-bottom: 3px solid rgb(201, 201, 201);
+    background: transparent;
+    transition: all 0.5s;
+
+}
+
+.inputBox:focus {
+    border-bottom: 2px solid #30336b;
+}
+
+.button {
+    display: block;
+    outline: none;
+    background: transparent;
+    border: 2px solid #30336b;
+    padding: 15px;
+    margin: 40px auto 0;
+    border-radius: 20px;
+    width: 110px;
+    font-size: 20px;
+    transition: all 0.5s;
+    opacity: 0.6;
+}
+
+.button:hover {
+    cursor: pointer;
+    opacity: 1;
+    transform: scale(1.2);
+    color:#30336b;
+}

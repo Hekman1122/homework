@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products-Page</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <link rel="stylesheet" href="./style/products.css">
+</head>
+
+<body>
+    <div id='mainPage'>
+        <h1>產品列表</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>產品名稱</th>
+                    <th>原價</th>
+                    <th>售價</th>
+                    <th>是否啟用</th>
+                    <th>查看細節</th>
+                    <th>刪除嗎?</th>
+                </tr>
+            </thead>
+            <hr>
+            <tbody>
+                <tr v-for=" item in products" :key="item.id">
+                    <td>{{item.title}}</td>
+                    <td>{{item.origin_price}}</td>
+                    <td>{{item.price}}</td>
+                    <td>
+                        <span v-if="item.is_enabled" class="enable">啟用</span>
+                        <span v-else class="disable">未啟用</span>
+                    </td>
+                    <td>
+                        <button class='tableButton' type="button" @click="getSingleProduct(item.id)">點我</button>
+                    </td>
+                    <td>
+                        <button class='tableButton' type="button" @click="deleteProducts(item.id)">刪除</button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+        <p id="count">目前共有{{products.length}}項產品</p>
+
+        <div id='showDetail'>
+            <h1>單一產品細節</h1>
+            <div class="itemContent" v-if="temp.title">
+                <div class="col-1">
+                    <img class='largepic' :src="temp.imageUrl">
+                    <ul>
+                        <li v-for="(item , i) in temp.imagesUrl" :key="i">
+                            <img class="smallpic" :src="item">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-2">
+                    <h2>{{temp.title}} <span>{{temp.category}}</span></h2>
+                    <p>商品描述 : {{temp.description}}</p>
+                    <p>商品內容 : {{temp.content}}</p>
+                    <p>產品售價 : 超激價! {{temp.price}} <span class='originPrice'>{{temp.origin_price}}</span> 個 / 元</p>
+                    <p>尚有數量 : {{temp.num}} {{temp.unit}}</p>
+                </div>
+
+            </div>
+            <div v-else>請選擇一個商品查看</div>
+        </div>
+    </div>
+    <script src="javascript/products.js" ></script>
+</body>
+
+</html>
