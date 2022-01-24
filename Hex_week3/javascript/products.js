@@ -18,14 +18,18 @@ const vm = Vue.createApp({
 
         }
     },
+    mounted() {
+        this.getProducts()
+    },
     computed: {
         showCom() {
             if (this.page) {
                 return `${this.page}-page`
             }
-
         }
+
     },
+    
     methods: {
         //確認登入狀態
         checkLogin: function () {
@@ -65,10 +69,8 @@ const vm = Vue.createApp({
             btn.forEach((item) => {
                 item.classList.remove('active')
             })
-            this.temp = a;
-            if (a.title === this.temp.title) {
-                e.target.classList.add('active')
-            }
+            this.temp = {...a};
+            e.target.classList.add('active')
         },
 
         //刪除產品
@@ -126,7 +128,8 @@ const vm = Vue.createApp({
             axios.put(`${url}/api/${path}/admin/product/${sample.id}`, product)
                 .then(res => {
                     console.log('修改成功')
-                    this.getProducts()
+                    this.getProducts();
+                    this.temp = {...sample};
                 })
                 .catch(err => {
                     console.dir(err)
@@ -143,10 +146,8 @@ const vm = Vue.createApp({
             this.temp = item;
             this.page = 'edit'
         }
-    },
-    mounted() {
-        this.getProducts()
     }
+    
 })
 
 //新增產品元件
