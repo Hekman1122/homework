@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,200;0,300;1,200&family=Mukta:wght@300;400;500;600&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        padding: 1% 5% 0 5%;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-family: 'Mukta', sans-serif;
+        letter-spacing: 2px;
+        color: #30336b;
+        position: relative;
+    }
+    h1 {
+        font-size: 32px;
+    }
+    #addProduct{
+        position:absolute;
+        top:26px;
+        right:80px;
+        font-size: 32px;
+        color:#ec250f;
+        transition: all 0.5s;
+    }
+    #addProduct span{
+        font-size: 18px;
+    }
+    #addProduct i{
+        margin-left: 8px;
+        font-size: 18px;
+    }
+    #addProduct:hover{
+        cursor: pointer;
+        transform:scale(1.1)
+    }
+    table {
+        width: 90%;
+        text-align: center;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+    table thead th {
+        padding: 10px;
+        width: 100px;
+        font-size: 24px;
+
+    }
+
+    table tbody td {
+        font-size: 20px;
+        transition: 0.3s;
+    }
+
+    .enable {
+        color: #e67e22;
+    }
+
+    .disable {
+        color: #95a5a6 !important;
+    }
+
+    .tableButton {
+        outline: none;
+        background: transparent;
+        border-radius: 10px;
+        padding: 2px;
+        cursor: pointer;
+        width: 90px;
+        border: 2px solid black;
+        color: #ec250f;
+        font-size: 18px;
+        transition: all 0.5s;
+        opacity: 0.5;
+    }
+
+    .tableButton:hover {
+        opacity: 1;
+        width: 95px;
+        cursor: pointer;
+    }
+
+    .active {
+        opacity: 1;
+        width: 95px;
+    }
+    table i {
+        margin:0 10px;
+        font-size: 20px;
+        line-height: 20px;
+        color: #ec250f;
+        opacity: 0.5;
+        transition: all 0.5s;
+    }
+    table i:hover{
+        opacity: 1;
+        font-size:24px;
+        cursor: pointer;
+    }
+    #count {
+        text-align: right;
+        color: #95a5a6;
+    }
+
+    img {
+        border-radius: 15px;
+        box-shadow: 1px 2px 4px #000, -1px -2px 4px #95a5a6;
+    }
+
+    .largepic {
+        width: 350px;
+        height: 350px;
+    }
+
+    .itemContent {
+        display: flex;
+    }
+
+    .originPrice {
+        text-decoration: line-through;
+    }
+
+    .col-1,
+    .col-2 {
+        flex: 1;
+        padding: 2%;
+    }
+
+    .col-1 {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .col-1 li {
+        list-style-type: none;
+        margin-bottom: 8px;
+    }
+
+    .smallpic {
+        width: 160px;
+        height: 160px;
+    }
+
+    .col-2 {
+        display: flex;
+        gap: 30px;
+        flex-direction: column;
+    }
+
+    .col-2 h2 {
+        letter-spacing: 3px;
+        font-size: 30px;
+    }
+
+    .col-2 h2 span {
+        font-size: 20px;
+        display: inline-block;
+        background-color: #e9e9e9;
+        margin-left: 20px;
+        width: 80px;
+        text-align: center;
+        padding: 5px;
+        border-radius: 15px;
+    }
+
+    .col-2 p {
+        font-size: 22px;
+    }
+
+    .bg {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 10;
+    }
+
+    .main {
+        font-size: 18px;
+        position: fixed;
+        height:620px;
+        width: 920px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 11;
+        background-color: rgb(252, 252, 252);
+        box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3), -1px -2px 3px rgba(255, 255, 255, 0.5);
+        border-radius: 15px;
+        padding: 20px;
+    }
+    .main-col {
+        display: flex;
+    }
+    .input-box ,.img-box{
+        display: flex;
+        align-items: flex-start;
+        gap: 30px;
+        flex-direction: column;
+        padding: 20px;
+        flex:1
+    }
+
+    .input-box input ,.img-box input{
+        padding: 8px;
+        font-size: 18px;
+        width:200px;
+        height: 32px;
+        display: inline-block;
+        outline: none;
+        background: transparent;
+        border: 2px solid rgb(172, 172, 172);
+        border-radius: 12px;
+        margin-right: 50px;
+        transition: all 0.5s;
+    }
+    .input-box label{
+        font-size:18px;
+    }
+    .input-box input:focus {
+        border: 2px solid #2e488f;
+    }
+   
+    .main .btn {
+        background: transparent;
+        outline: none;
+        border: 2px solid #2e488f;
+        padding: 12px;
+        font-size: 18px;
+        border-radius: 15px;
+        width: 100px;
+        transition: all 0.5s;
+        opacity: 0.5;
+        height: 50px;
+        line-height: 26px;
+        margin: 0 20px 0;
+    }
+
+    .main .btn:hover {
+        cursor: pointer;
+        opacity: 1;
+        width:110px;
+    }
+    
