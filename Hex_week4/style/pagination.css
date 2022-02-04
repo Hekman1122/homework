@@ -1,0 +1,34 @@
+    
+    .page ul {
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .page li{
+        list-style: none;
+        border: 1px solid #30336b;
+        padding:2px 6px;
+        cursor: pointer;
+        opacity: 0.8;
+        transition:all 0.5s;
+    }
+    .page li:hover{
+        opacity: 1;
+    }
+    .page li.mid{
+        width:30px;
+    }
+    .page li:first-child{
+        border-radius: 8px 0 0 8px;
+    }
+    .page li:last-child{
+        border-radius: 0 8px 8px 0;
+    }
+    .page .disable {
+        color:#636e72;
+    }
+    .page .active {
+        color:#fff;
+        background-color:#3b3f97;
+    }
