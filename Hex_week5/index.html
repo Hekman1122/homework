@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Henry's Handmade</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+  <script src="https://kit.fontawesome.com/089c571203.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@5.0.3/dist/vue-loading.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@5.0.3/dist/vue-loading.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="header">
+      <h1><i>H & H</i></h1>
+      <ul>
+        <!-- <li>Home</li>
+                <li>Product</li> -->
+        <li @click="changeSwitchLogin">Login</li>
+        <i class="fas fa-shopping-cart" @click="page='carts'"></i>
+      </ul>
+    </div>
+
+    <!-- banner------------------------------------------------ -->
+    <banner></banner>
+    <div class="mid-line">
+      <h1>百分百手作的堅持，只為那每一口的品質。</h1>
+    </div>
+    <div class="nav">
+      <template v-if="page === 'cards'">
+        <h1>
+          <span >產品分類</span>
+        </h1>
+        <ul>
+          <li @click="filter=''" :class="{active : filter===''}">全部</li>
+          <li @click="filter='蛋糕'" :class="{active : filter==='蛋糕'}">
+            蛋糕
+          </li>
+          <li @click="filter='小點'" :class="{active : filter==='小點'}">
+            點心
+          </li>
+          <li @click="filter='甜甜圈'" :class="{active : filter==='甜甜圈'}">
+            甜甜圈
+          </li>
+        </ul>
+      </template>
+
+      <h1 v-else-if="page === 'carts'" class="cartTitle">
+        <span>購物清單</span> 
+        <span @click="page='cards'"><i class="fa-solid fa-list-ul"></i></span>
+      </h1>
+    </div>
+    <!-- product-list------------------------------------------ -->
+    <cards :filter="filter" v-if="page === 'cards'"></cards>
+    <!-- shopping-list--------------- -->
+    <carts :user-data="user" v-if="page === 'carts'"></carts>
+    <!-- login------------------------------- -->
+    <login ref="login" @login-data="receiveData"></login>
+    <!-- detail--------------------- -->
+    <detail></detail>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/4.5.8/vee-validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vee-validate/rules@4.5.8/dist/vee-validate-rules.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vee-validate/i18n@4.5.8/dist/vee-validate-i18n.min.js"></script>
+<script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+
+<script src="./js/index.js" type="module"></script>
+
+</html>
